@@ -28,6 +28,9 @@ giBuffer ftgen 0, 0, giTabLenSec*sr, 2, 0; table for audio data storage
 giWin ftgen 1, 0, 512, 20, 6, 1, 2
 
 gkDur init 0.1
+gkFreq init 200
+gkAzi init 0
+gkEle init 0
 
 ;-------------------------------------------------------
 ;--------------------BufferManagement-------------------
@@ -55,9 +58,7 @@ endin
 
 instr Metro
 
-kFrequency = 1000
-
-kTrig metro kFrequency
+kTrig metro gkFreq
 
 kStartPoint samphold gkReadPoint, kTrig
 
@@ -88,7 +89,10 @@ aGrain table aPhase, giBuffer, 0, 0, 1
 aEnvIdx line 0, iDur, 1
 aEnv table aEnvIdx, giWin , 1
 
-outs aGrain*aEnv/10, aGrain*aEnv/10
+;aGrainX[] encoderX3O  aGrain*aEnv, gkAzi, gkEle
+
+;out aGrainX
+outs aGrain*aEnv, aGrain*aEnv
 
 endin
 
@@ -98,6 +102,8 @@ endin
 
 instr OSCListen
 kGotIt OSClisten gihandle, "/rtGX3O/dur", "f", gkDur
+kGotIt OSClisten gihandle, "/rtGX3O/azi", "f", gkAzi
+kGotIt OSClisten gihandle, "/rtGX3O/ele", "f", gkEle
 if kGotIt == 1 then
   printf "Message Received for '%s' at time %f: kReceiveValue = %d\n",
          1, "/exmp_1/int", times:k(), gkDur
