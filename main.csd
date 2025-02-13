@@ -1,8 +1,10 @@
 <CsoundSynthesizer>
 <CsOptions>
--n -d --hardwarebufsamps=256 --realtime -B512 -b128 -odac0
+-odac
 </CsOptions>
 <CsInstruments>
+
+;--hardwarebufsamps=256 --realtime -B512 -b128 -odac
 
 ;-------------------------------------------------------
 ;--------------------Global Variables-------------------
@@ -105,6 +107,9 @@ endin
 
 </CsInstruments>
 <CsScore>
+
+f0 z
+
 i   "BufferManagement"  0   604800
 i   "Metro"  0   604800
 i   "OSCListen"  0   604800
