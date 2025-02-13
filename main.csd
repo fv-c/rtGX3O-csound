@@ -1,6 +1,6 @@
 <CsoundSynthesizer>
 <CsOptions>
--odac
+-odac -m0d
 </CsOptions>
 <CsInstruments>
 
@@ -23,7 +23,7 @@ gihandle OSCinit 7125
 
 giTabLenSec = 3 ;table duration in seconds
 giBuffer ftgen 0, 0, giTabLenSec*sr, 2, 0; table for audio data storage
-maxalloc 2, 1 ; allow only one instance of the recording instrument at a time
+;maxalloc 2, 1 ; allow only one instance of the recording instrument at a time
 
 giWin ftgen 1, 0, 512, 20, 6, 1, 2
 
@@ -55,7 +55,7 @@ endin
 
 instr Metro
 
-kFrequency = 300
+kFrequency = 1000
 
 kTrig metro kFrequency
 
@@ -63,7 +63,7 @@ kStartPoint samphold gkReadPoint, kTrig
 
 kDurSH samphold gkDur, kTrig
 
-schedkwhen kTrig, 0, 300, "Player", 0, kDurSH, kStartPoint
+schedkwhen kTrig, 0, 1000, "Player", 0, kDurSH, kStartPoint
 
 endin
 
@@ -107,8 +107,6 @@ endin
 
 </CsInstruments>
 <CsScore>
-
-f0 z
 
 i   "BufferManagement"  0   604800
 i   "Metro"  0   604800
