@@ -14,6 +14,8 @@ nchnls = 2
 
 #include "manageBufferUDO.csd"
 
+#include "encoderX3OUDO.csd"
+
 gihandle OSCinit 7125
 
 
@@ -23,7 +25,7 @@ maxalloc 2, 1 ; allow only one instance of the recording instrument at a time
 
 giWin ftgen 1, 0, 512, 20, 6, 1, 2
 
-gkDur init .1
+gkDur init 0.1
 
 ;-------------------------------------------------------
 ;--------------------BufferManagement-------------------
@@ -37,9 +39,9 @@ gkProxSec init 1
 
 kRandomPerc = 0.5 * sr
 
-aInputSignal inch 1
+;aInputSignal inch 1
 
-;aInputSignal oscili 0.5, 500
+aInputSignal oscili 0.5, 500
 
 gaWritePoint, gkReadPoint manageBuffer aInputSignal, giBuffer, gkProxSec, kRandomPerc
 
@@ -51,7 +53,7 @@ endin
 
 instr Metro
 
-kFrequency = 20
+kFrequency = 300
 
 kTrig metro kFrequency
 
@@ -59,7 +61,7 @@ kStartPoint samphold gkReadPoint, kTrig
 
 kDurSH samphold gkDur, kTrig
 
-schedkwhen kTrig, 0, 1000, "Player", 0, kDurSH, kStartPoint
+schedkwhen kTrig, 0, 300, "Player", 0, kDurSH, kStartPoint
 
 endin
 
@@ -84,7 +86,7 @@ aGrain table aPhase, giBuffer, 0, 0, 1
 aEnvIdx line 0, iDur, 1
 aEnv table aEnvIdx, giWin , 1
 
-outs aGrain*aEnv, aGrain*aEnv
+outs aGrain*aEnv/10, aGrain*aEnv/10
 
 endin
 
@@ -109,20 +111,3 @@ i   "OSCListen"  0   604800
 </CsScore>
 
 </CsoundSynthesizer>
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>100</x>
- <y>100</y>
- <width>320</width>
- <height>240</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="background">
-  <r>240</r>
-  <g>240</g>
-  <b>240</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>
